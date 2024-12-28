@@ -5,11 +5,6 @@ void Controller::begin()
     xboxController.begin();
 }
 
-void Controller::onLoop()
-{
-    xboxController.onLoop();
-}
-
 bool Controller::isConnected()
 {
     return xboxController.isConnected();

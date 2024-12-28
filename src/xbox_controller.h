@@ -9,7 +9,6 @@ class Controller
 {
 public:
     XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
-    void onLoop();
 
     void begin();
 
