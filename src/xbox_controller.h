@@ -1,58 +1,33 @@
 #ifndef XBOX_CONTROLLER_H
 #define XBOX_CONTROLLER_H
 
+#include <Arduino.h>
 #include <XboxSeriesXControllerESP32_asukiaaa.hpp>
 #include <cmath>
-
-XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 
 class Controller
 {
 public:
-    void begin()
-    {
-        xboxController.begin();
-    }
+    XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
+    void onLoop();
 
-    void read_controller()
-    {
-        if (!xboxController.isConnected())
-        {
-            Serial.println("Xbox Controller not connected.");
-            return;
-        }
-        receiveValue[0] = xboxController.xboxNotif.joyLVert;
-        receiveValue[1] = xboxController.xboxNotif.joyLHori;
-        receiveValue[2] = xboxController.xboxNotif.joyRVert;
-        receiveValue[3] = xboxController.xboxNotif.joyRHori;
-    }
+    void begin();
 
-    void calculate_Throttle()
-    {
-        Throttle = abs(1 - receiveValue[1] / joystickMax);
-    }
+    bool isConnected();
 
-    float getThrottle()
-    {
-        return Throttle;
-    }
+    bool isWaitingForFirstNotification();
 
-    void unlock()
-    {
-        if (Throttle == 0 && xboxController.xboxNotif.btnXbox == 1)
-        {
-            Serial.println("Drone unlocked!");
-            lock = false;
-        }
+    int getCountFailedConnection();
 
-        // 初始化
-        Throttle = 0;
-    }
+    void read_controller();
 
-    bool getLock()
-    {
-        return lock;
-    }
+    void calculate_Throttle();
+
+    float getThrottle();
+
+    void unlock();
+
+    bool getLock();
 
 private:
     int ChannelNumber = 4;
