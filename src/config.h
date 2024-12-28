@@ -22,3 +22,9 @@ left  [ ESP32 ] right
 //UART
 #define SERIAL_BAUD_RATE 115200
 
+//channel
+//channel1 roll
+//channel2 pitch
+//channel3 yaw
+//channel4 throttle
+
