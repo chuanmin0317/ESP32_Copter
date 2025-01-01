@@ -3,13 +3,12 @@
 
 struct  _1_ekf_filter
 {
-    float LastP;
-    float NowP;
+    float Predict;
     float Q;
     float R;
     float Kg;
     float out;
 };
 
-extern void kalman_1d(struct _1_ekf_filter *ekf, float Rate, float Angle);
+extern void KalmanAngle();
 #endif

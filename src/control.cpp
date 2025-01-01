@@ -16,7 +16,7 @@ void PidControl(float dt)
 
     CascadePID(&pidRateRoll, &pidRoll, dt);
     CascadePID(&pidRatePitch, &pidPitch, dt);
-    CascadePID(&pidRateYaw, &pidYaw, dt);
+    pidUpdate(&pidRateYaw, dt);
 }
 
 void MotorInit()

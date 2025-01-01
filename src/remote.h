@@ -1,13 +1,15 @@
 #ifndef _XBOX_CONTROLLER_H
 #define _XBOX_CONTROLLER_H
 
+#include <stdint.h>
 
-typedef struct{
+typedef struct
+{
     uint16_t roll;
     uint16_t pitch;
     uint16_t yaw;
     uint16_t throttle;
-}st_Controller;
+} st_Controller;
 
 extern void ControllerInit(void);
 

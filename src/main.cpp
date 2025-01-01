@@ -20,6 +20,7 @@ void loop()
         else
         {
             GetImuData(&Mpu9250, &Angle);
+            KalmanAngle();
             RC_Analyse();
             PidControl(0.004);
             MotorControl();

@@ -4,6 +4,7 @@
 #include "MyCommon.h"
 
 uint16_t joystickMax = XboxControllerNotificationParser::maxJoy;
+XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 
 MPU9250 mpu9250;
 

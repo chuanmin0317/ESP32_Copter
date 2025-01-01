@@ -5,14 +5,18 @@
 #include <Wire.h>
 #include <MPU9250.h>
 #include <XboxSeriesXControllerESP32_asukiaaa.hpp>
+
 #include "pid.h"
 #include "remote.h"
 #include "control.h"
 #include "imu.h"
 #include "config.h"
+#include "kalman.h"
+
+#include <stdint.h>
 
 extern XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
-extern uint16_t joystickMax = XboxControllerNotificationParser::maxJoy;
+extern uint16_t joystickMax;
 
 extern MPU9250 mpu9250;
 
