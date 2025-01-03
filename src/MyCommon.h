@@ -17,8 +17,6 @@
 
 extern uint16_t joystickMax;
 
-extern MPU9250 mpu9250;
-
 extern st_Mpu Mpu9250;
 extern st_Angle Angle;
 extern st_Controller Controller;

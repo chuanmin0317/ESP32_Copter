@@ -1,6 +1,8 @@
 #include "imu.h"
 #include "MyCommon.h"
 
+extern MPU9250 mpu9250;
+
 void calibration()
 {
     mpu9250.setGyroBias(-1.27, -0.38, -1.76);
@@ -59,10 +61,10 @@ void GetImuData(st_Mpu *mpu, st_Angle *angle)
             prev_ms = millis();
         }
     }
-    // Serial.print("roll: ");
-    // Serial.print(angle->roll);
-    // Serial.print(" pitch: ");
-    // Serial.print(angle->pitch);
-    // Serial.print(" yaw: ");
-    // Serial.println(angle->yaw);
+    Serial.print("roll: ");
+    Serial.print(angle->roll);
+    Serial.print(" pitch: ");
+    Serial.print(angle->pitch);
+    Serial.print(" yaw: ");
+    Serial.println(angle->yaw);
 }

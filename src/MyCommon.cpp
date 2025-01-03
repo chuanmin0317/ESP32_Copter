@@ -5,7 +5,6 @@
 
 uint16_t joystickMax = XboxControllerNotificationParser::maxJoy;
 
-MPU9250 mpu9250;
 
 st_Mpu Mpu9250;
 st_Angle Angle;

@@ -1,6 +1,7 @@
 #include "MyCommon.h"
 
 XboxSeriesXControllerESP32_asukiaaa::Core controller;
+MPU9250 mpu9250;
 
 void setup()
 {
@@ -39,7 +40,6 @@ void loop()
 
     while (micros() - Timer < (4000))
     {
-        Serial.println("wait");
     }
 
     Timer = micros();
