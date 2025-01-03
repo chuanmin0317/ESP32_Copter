@@ -11,8 +11,9 @@ void calibration()
 
 void MpuInit()
 {
-    Wire.setClock(400000);
+    Wire.setPins(SDA_PIN, SCL_PIN);
     Wire.begin();
+    Wire.setClock(400000);
     delay(250);
 
     MPU9250Setting setting;
@@ -39,16 +40,29 @@ void MpuInit()
 
 void GetImuData(st_Mpu *mpu, st_Angle *angle)
 {
-    mpu9250.update();
-    mpu->accX = mpu9250.getAccX();
-    mpu->accY = mpu9250.getAccY();
-    mpu->accZ = mpu9250.getAccZ();
-    
-    mpu->gyroX = mpu9250.getGyroX();
-    mpu->gyroY = mpu9250.getGyroY();
-    mpu->gyroZ = mpu9250.getGyroZ();
+    if (mpu9250.update())
+    {
+        static uint32_t prev_ms = millis();
+        if (millis() > prev_ms + 6)
+        {
+            mpu->accX = mpu9250.getAccX();
+            mpu->accY = mpu9250.getAccY();
+            mpu->accZ = mpu9250.getAccZ();
 
-    angle->roll = mpu9250.getRoll();
-    angle->pitch = mpu9250.getPitch();
-    angle->yaw = mpu9250.getYaw();
+            mpu->gyroX = mpu9250.getGyroX();
+            mpu->gyroY = mpu9250.getGyroY();
+            mpu->gyroZ = mpu9250.getGyroZ();
+
+            angle->roll = mpu9250.getRoll();
+            angle->pitch = mpu9250.getPitch();
+            angle->yaw = mpu9250.getYaw();
+            prev_ms = millis();
+        }
+    }
+    // Serial.print("roll: ");
+    // Serial.print(angle->roll);
+    // Serial.print(" pitch: ");
+    // Serial.print(angle->pitch);
+    // Serial.print(" yaw: ");
+    // Serial.println(angle->yaw);
 }

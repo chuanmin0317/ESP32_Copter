@@ -3,10 +3,10 @@
 
 void kalman_1d(struct _1_ekf_filter *ekf, float Rate, float Angle)
 {
-    ekf->Predict = ekf->Predict + Rate * ekf->Q;
-    ekf->Kg = ekf->Predict / (ekf->Predict + ekf->R);
+    ekf->Now_P = ekf->LastP + ekf->Q * Rate;
+    ekf->Kg = ekf->Now_P / (ekf->Now_P + ekf->R);
     ekf->out = ekf->out + ekf->Kg * (Angle - ekf->out);
-    ekf->Predict = (1 - ekf->Kg) * ekf->Predict;
+    ekf->LastP = (1 - ekf->Kg) * ekf->Now_P;
 }
 
 void KalmanAngle()
@@ -14,9 +14,9 @@ void KalmanAngle()
     for (int i = 0; i < 3; i++)
     {
         static struct _1_ekf_filter AngleFilter[3] = {
-            {0, 0.004, 0.1, 0, 0},
-            {0, 0.004, 0.1, 0, 0},
-            {0, 0.004, 0.1, 0, 0}};
+            {0, 0, 0.004, 2, 0, 0},
+            {0, 0, 0.004, 0.1, 0, 0},
+            {0, 0, 0.004, 0.1, 0, 0}};
         if (i == 0)
         {
             kalman_1d(&AngleFilter[i], Mpu9250.gyroX, Angle.roll);

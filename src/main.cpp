@@ -1,5 +1,7 @@
 #include "MyCommon.h"
 
+XboxSeriesXControllerESP32_asukiaaa::Core controller;
+
 void setup()
 {
     Serial.begin(115200);
@@ -10,17 +12,17 @@ void setup()
 
 void loop()
 {
-    xboxController.onLoop();
-    if (xboxController.isConnected())
+    GetImuData(&Mpu9250, &Angle);
+    controller.onLoop();
+    if (controller.isConnected())
     {
-        if (xboxController.isWaitingForFirstNotification())
+        if (controller.isWaitingForFirstNotification())
         {
             Serial.println("waiting for first notification");
         }
         else
         {
-            GetImuData(&Mpu9250, &Angle);
-            KalmanAngle();
+            // KalmanAngle();
             RC_Analyse();
             PidControl(0.004);
             MotorControl();
@@ -29,14 +31,16 @@ void loop()
     else
     {
         Serial.println("not connected");
-        if (xboxController.getCountFailedConnection() > 2)
+        if (controller.getCountFailedConnection() > 2)
         {
             ESP.restart();
         }
     }
 
     while (micros() - Timer < (4000))
-        ;
+    {
+        Serial.println("wait");
+    }
 
     Timer = micros();
 }

@@ -4,7 +4,6 @@
 #include "MyCommon.h"
 
 uint16_t joystickMax = XboxControllerNotificationParser::maxJoy;
-XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 
 MPU9250 mpu9250;
 
@@ -24,25 +23,31 @@ uint32_t Timer;
 
 void PID_ParamInit(void);
 
-void ALL_Init(){
-    PID_ParamInit();
+void ALL_Init()
+{
     ControllerInit();
+    PID_ParamInit();
     MotorInit();
     MpuInit();
 }
 
-void PID_ParamInit(void){
-    pidRateRoll.kp = pidRatePitch.kp = 0.6;
-    pidRateRoll.ki = pidRatePitch.ki = 3.5;
-    pidRateRoll.kd = pidRatePitch.kd = 0.03;
+void PID_ParamInit(void)
+{
+    pidRateRoll.kp = 0;
+    pidRatePitch.kp = 0;
+    pidRateYaw.kp = 0;
 
-    pidRateYaw.kp = 2;
-    pidRateYaw.ki = 12;
+    pidRateRoll.ki = 0;
+    pidRatePitch.ki = 0;
+    pidRateYaw.ki = 0;
+
+    pidRateRoll.kd = 0;
+    pidRatePitch.kd = 0;
     pidRateYaw.kd = 0;
 
-    pidRoll.kp = pidPitch.kp = 2;
-    pidRoll.ki = pidPitch.ki = 0;
-    pidRoll.kd = pidPitch.kd = 0;
+    pidRoll.kp = 0;
+    pidPitch.kp = 0;
+    pidYaw.kp = 0;
 }
 
 #endif

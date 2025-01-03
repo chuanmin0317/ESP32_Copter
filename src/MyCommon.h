@@ -15,7 +15,6 @@
 
 #include <stdint.h>
 
-extern XboxSeriesXControllerESP32_asukiaaa::Core xboxController;
 extern uint16_t joystickMax;
 
 extern MPU9250 mpu9250;

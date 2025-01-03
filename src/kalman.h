@@ -3,7 +3,8 @@
 
 struct  _1_ekf_filter
 {
-    float Predict;
+    float LastP;
+    float Now_P;
     float Q;
     float R;
     float Kg;

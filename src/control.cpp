@@ -21,16 +21,16 @@ void PidControl(float dt)
 
 void MotorInit()
 {
-    ledcSetup(0, 250, 10);
+    ledcSetup(0, 5000, 10);
     ledcAttachPin(MOTOR1_PIN, 0);
 
-    ledcSetup(1, 250, 10);
+    ledcSetup(1, 5000, 10);
     ledcAttachPin(MOTOR2_PIN, 1);
 
-    ledcSetup(2, 250, 10);
+    ledcSetup(2, 5000, 10);
     ledcAttachPin(MOTOR3_PIN, 2);
 
-    ledcSetup(3, 250, 10);
+    ledcSetup(3, 5000, 10);
     ledcAttachPin(MOTOR4_PIN, 3);
 }
 
@@ -53,15 +53,7 @@ void MotorControl()
 {
     int16_t temp;
     temp = Controller.throttle - 1000;
-
-    if (Controller.throttle < 1030)
-    {
-        MOTOR1 = MOTOR2 = MOTOR3 = MOTOR4 = 0;
-        pidReset(pPidObject, 6);
-        return;
-    }
-
-    temp = LIMIT(temp, 900, 0);
+    Serial.println(temp);
 
     MOTOR1 = temp - pidRateRoll.output + pidRatePitch.output - pidRateYaw.output; // 左前
     MOTOR2 = temp + pidRateRoll.output + pidRatePitch.output + pidRateYaw.output; // 右前
@@ -73,6 +65,12 @@ void MotorControl()
     MOTOR3 = LIMIT(MOTOR3, 1000, 0);
     MOTOR4 = LIMIT(MOTOR4, 1000, 0);
 
+    if (Controller.throttle < 1030)
+    {
+        MOTOR1 = MOTOR2 = MOTOR3 = MOTOR4 = 0;
+        pidReset(pPidObject, 6);
+    }
+    Serial.print(MOTOR1);
     ledcWrite(0, MOTOR1);
     ledcWrite(1, MOTOR2);
     ledcWrite(2, MOTOR3);
