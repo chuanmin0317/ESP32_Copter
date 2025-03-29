@@ -111,7 +111,7 @@ cd ESP32_Copter
 **Safety First! Always remove all propellers during initial testing and debugging!**
 
 1.  **Upload Firmware:** Flash the compiled firmware onto the ESP32 following the steps above.
-2.  **Connect Hardware:** Ensure all hardware components (IMU, ESCs, Motors, Battery) are connected correctly. **Double-check that `MOTOR3_PIN` uses an output-capable GPIO.**
+2.  **Connect Hardware:** Ensure all hardware components (IMU, ESCs, Motors, Battery) are connected correctly.
 3.  **Turn on Controller:** Power on the Xbox Series X controller. The ESP32's Bluetooth should automatically attempt to pair and connect (refer to the asukiaaa library documentation for initial pairing if needed).
 4.  **Connect Serial Monitor:** Use the Serial Monitor in Arduino IDE or PlatformIO, set the baud rate to `115200`, and observe the debug output (e.g., connection status, IMU readings, PID values).
 5.  **Arm Motors:** Move the throttle joystick (`joyLVert`) on the controller to its lowest position, then slightly upwards (above the implicit `1030` threshold in the code, recommended to define as `MOTOR_ARM_THRESHOLD`). The PID controllers should now be active, and the motors might start trying to stabilize based on the drone's orientation (if propellers are removed).
