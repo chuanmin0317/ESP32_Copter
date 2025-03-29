@@ -61,10 +61,10 @@ void GetImuData(st_Mpu *mpu, st_Angle *angle)
             prev_ms = millis();
         }
     }
-    Serial.print("roll: ");
-    Serial.print(angle->roll);
-    Serial.print(" pitch: ");
-    Serial.print(angle->pitch);
-    Serial.print(" yaw: ");
-    Serial.println(angle->yaw);
+    // Serial.print("roll: ");
+    // Serial.print(angle->roll);
+    // Serial.print(" pitch: ");
+    // Serial.print(angle->pitch);
+    // Serial.print(" yaw: ");
+    // Serial.println(angle->yaw);
 }
