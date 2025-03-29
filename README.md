@@ -28,7 +28,7 @@ This repository contains the firmware for a quadcopter drone flight controller b
 *   **Motor Control:** PWM (using ESP32 LEDC)
 *   **Main Libraries:**
     *   `Wire.h` (Arduino I2C)
-    *   `MPU9250.h` (<!-- Please fill in the name or source of the MPU9250 library you used -->)
+    *   `MPU9250.h` ([hideakitai/MPU9250](https://github.com/hideakitai/MPU9250))
     *   `XboxSeriesXControllerESP32_asukiaaa.hpp`
 *   **Version Control:** Git
 
