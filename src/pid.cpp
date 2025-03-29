@@ -2,12 +2,12 @@
 
 void pidReset(PidObject **pid, const int len)
 {
-   for (int i = 0; i < len; i++)
-   {
-      (*pid)[i].integral = 0;
-      (*pid)[i].prevError = 0;
-      (*pid)[i].output = 0;
-   }
+    for (int i = 0; i < len; i++)
+    {
+        pid[i]->integral = 0;
+        pid[i]->prevError = 0;
+        pid[i]->output = 0;
+    }
 }
 
 void pidUpdate(PidObject *pid, const float dt)
