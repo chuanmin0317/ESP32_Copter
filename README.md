@@ -89,8 +89,8 @@ left  [ ESP32 ] right
 **2. Get the Code:**
 
 ```bash
-git clone [Your GitHub Repo Link]
-cd [Your Project Directory Name]
+git clone https://github.com/chuanmin0317/ESP32_Copter.git
+cd ESP32_Copter
 ```
 
 ### 3. Compile and Upload:
