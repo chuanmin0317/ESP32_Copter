@@ -1,18 +1,18 @@
 /*
-    motor1  motor2
+    motor1  motor4
       \\      //
        \\    //
 left  [ ESP32 ] right
        //    \\
       //      \\
-    motor4  motor3
+    motor2  motor3
 */
 
 //motor
 #define MOTOR1_PIN 13
-#define MOTOR2_PIN 33
-#define MOTOR3_PIN 34
-#define MOTOR4_PIN 14
+#define MOTOR2_PIN 14
+#define MOTOR3_PIN 33
+#define MOTOR4_PIN 34
 
 //I2C 
 #define SDA_PIN 21
