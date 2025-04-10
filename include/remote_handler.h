@@ -22,7 +22,7 @@ public:
      * Call this periodically in the main loop.
      * @return true if update is successful, false otherwise.
      */
-    bool update();
+    void update();
 
     /**
      * @brief Checks if the controller is connected.
@@ -49,7 +49,7 @@ private:
     // Internal state variables
     DroneTypes::ControlSetpoint current_setpoint_;
     DroneTypes::RemoteInputRaw current_raw_input_;
-    bool is_connected_;
+    bool connected_;
 
     /**
      * @brief Maps raw joystick values (0-65535) to a standard range (e.g., 1000-2000).
