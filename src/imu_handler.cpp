@@ -19,7 +19,7 @@ bool IMUHandler::begin()
     setting.accel_fchoice = 0x01;                       // 啟用加速度計濾波
     setting.accel_dlpf_cfg = ACCEL_DLPF_CFG::DLPF_45HZ; // 加速度計低通濾波器 45Hz
 
-    if (!mpu9250_sensor.setup(0x68, setting))
+    if (!mpu9250_sensor_lib_.setup(0x68, setting))
     {
         Serial.println("MPU connection failed. Please check wiring");
         return false;
@@ -35,29 +35,29 @@ bool IMUHandler::begin()
 
 void IMUHandler::applyCalibration()
 {
-    mpu9250_sensor.setGyroBias(-1.27, -0.38, -1.76);
-    mpu9250_sensor.setAccBias(-4.69, 58.14, 83.74);
-    mpu9250_sensor.setMagBias(04.54, 368.57, -327.77);
-    mpu9250_sensor.setMagScale(0.66, 1.26, 1.43);
+    mpu9250_sensor_lib_.setGyroBias(-1.27, -0.38, -1.76);
+    mpu9250_sensor_lib_.setAccBias(-4.69, 58.14, 83.74);
+    mpu9250_sensor_lib_.setMagBias(04.54, 368.57, -327.77);
+    mpu9250_sensor_lib_.setMagScale(0.66, 1.26, 1.43);
 }  
 
 
 bool IMUHandler::update()
 {   
     data_ready_ = false; // Assume no new data initially for this cycle
-    if (mpu9250_sensor.update())
+    if (mpu9250_sensor_lib_.update())
     {
-        current_mpu_data_.accX = mpu9250_sensor.getAccX();
-        current_mpu_data_.accY = mpu9250_sensor.getAccY();
-        current_mpu_data_.accZ = mpu9250_sensor.getAccZ();
+        current_mpu_data_.accX = mpu9250_sensor_lib_.getAccX();
+        current_mpu_data_.accY = mpu9250_sensor_lib_.getAccY();
+        current_mpu_data_.accZ = mpu9250_sensor_lib_.getAccZ();
 
-        current_mpu_data_.gyroX = mpu9250_sensor.getGyroX();
-        current_mpu_data_.gyroY = mpu9250_sensor.getGyroY();
-        current_mpu_data_.gyroZ = mpu9250_sensor.getGyroZ();
+        current_mpu_data_.gyroX = mpu9250_sensor_lib_.getGyroX();
+        current_mpu_data_.gyroY = mpu9250_sensor_lib_.getGyroY();
+        current_mpu_data_.gyroZ = mpu9250_sensor_lib_.getGyroZ();
 
-        current_attitude_.roll = mpu9250_sensor.getRoll();
-        current_attitude_.pitch = mpu9250_sensor.getPitch();
-        current_attitude_.yaw = mpu9250_sensor.getYaw();
+        current_attitude_.roll = mpu9250_sensor_lib_.getRoll();
+        current_attitude_.pitch = mpu9250_sensor_lib_.getPitch();
+        current_attitude_.yaw = mpu9250_sensor_lib_.getYaw();
 
         data_ready_ = true;
         return true; 
@@ -66,7 +66,7 @@ bool IMUHandler::update()
     return false;
 }
 
-DroneTypes::Attitude IMUHandler::getAttitude() const
+DroneTypes:: Attitude IMUHandler::getAttitude() const
 {
     return current_attitude_;
 }

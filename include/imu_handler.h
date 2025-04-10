@@ -43,7 +43,7 @@ public:
     bool isDataReady() const;
 
 private:
-    MPU9250 mpu9250_sensor;
+    MPU9250 mpu9250_sensor_lib_;
 
     DroneTypes::Attitude current_attitude_;
     DroneTypes::RawMPUData current_mpu_data_;
