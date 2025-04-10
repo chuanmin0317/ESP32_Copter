@@ -28,13 +28,13 @@ public:
      * @brief Gets the most recently read attitude data raw data.
      * @return Attitude struct containing roll, pitch, yaw.
      */
-    DroneTypes::RawMPUData getAttitude() const;
+    DroneTypes::Attitude getAttitude() const;
 
     /**
      * @brief Gets the most recently read raw MPU data.
      * @return RawMPUData struct containing accelerometer and gyroscope data.
      */
-    DroneTypes::Attitude getRawMPUData() const;
+    DroneTypes::RawMPUData getRawMPUData() const;
 
     /**
      * @brief Checks if new data was ready after the last update() call.
@@ -45,8 +45,8 @@ public:
 private:
     MPU9250 mpu9250_sensor;
 
-    DroneTypes::RawMPUData current_mpu_data_;
     DroneTypes::Attitude current_attitude_;
+    DroneTypes::RawMPUData current_mpu_data_;
     bool data_ready_;
 
     void applyCalibration();
