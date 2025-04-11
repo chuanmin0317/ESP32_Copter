@@ -1,3 +1,6 @@
 {
-  "cSpell.words": ["asukiaaa", "devkitm", "espressif", "hideakitai", "LEDC"]
+  "cSpell.words": ["asukiaaa", "devkitm", "espressif", "hideakitai", "LEDC"],
+  "files.associations": {
+    "random": "cpp"
+  }
 }
