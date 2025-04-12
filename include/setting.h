@@ -53,7 +53,7 @@ left  [ ESP32 ] right
 #define MOTOR_PWM_FREQUENCY 5000
 #define MOTOR_PWM_RESOLUTION 10 // 10 bits resolution (0-1023)
 #define MOTOR_PWM_MAX ((1 << MOTOR_PWM_RESOLUTION) - 1) // 1023
-#define MOTOR_OUTPUT_LIMIT MOTOR_PWM_MAX
+#define MOTOR_OUTPUT_MAX MOTOR_PWM_MAX
 #define MOTOR_OUTPUT_MIN 0
 
 // Sensor Settings
