@@ -28,9 +28,9 @@ bool FlightController::isArmed() const
 
 // Private Helper Functions
 
-bool FlightController::handleFailsafe()
+bool FlightController::handleFailsafe(const DroneTypes::RemoteData& remote_data)
 {
-    if (!remote_handler_.isConnected())
+    if (!remote_data.is_connected)
     {
         if (armed_)
         {
@@ -53,7 +53,7 @@ void FlightController::handleDisarmed()
     motor_driver_.writeOutputs(zero_commands);
 }
 
-void FlightController::checkArmingConditions(const DroneTypes::ControlSetpoint &setpoints)
+void FlightController::checkArmingConditions(const DroneTypes::RemoteData& remote_data)
 {
     // Arming Logic:
     // 1. Must be connected.
@@ -67,7 +67,7 @@ void FlightController::checkArmingConditions(const DroneTypes::ControlSetpoint &
         return;
     }
 
-    if (setpoints.throttle_value < RC_THROTTLE_ARM_THRESHOLD)
+    if (remote_data.setpoint.throttle_value < RC_THROTTLE_ARM_THRESHOLD)
     {
         if (armed_)
         {
@@ -116,10 +116,10 @@ void FlightController::calculateMotorCommands(const DroneTypes::ControlSetpoint 
 }
 
 // Main Control Cycle
-void FlightController::runControlCycle(float dt)
+void FlightController::runControlCycle(float dt, const DroneTypes::SensorData &sensor_data, DroneTypes::RemoteData &remote_data)
 {
     // 1. Handle Failsafe
-    if (handleFailsafe())
+    if (handleFailsafe(remote_data))
     {
         return;
     }
@@ -130,7 +130,7 @@ void FlightController::runControlCycle(float dt)
     DroneTypes::ControlSetpoint setpoints = remote_handler_.getSetpoint();
 
     // 3. Check Arming State
-    checkArmingConditions(setpoints);
+    checkArmingConditions(remote_data);
 
     // 4. Handle Disarmed State
     if (!armed_)
@@ -142,11 +142,11 @@ void FlightController::runControlCycle(float dt)
     // if Armed, Proceed with Control
 
     // 5. Update PID Controllers
-    pid_controllers_.update(setpoints, mpu_data, attitude, dt);
+    pid_controllers_.update(remote_data.setpoint, sensor_data.raw_mpu, sensor_data.attitude, dt);
 
     // 6. Calculate Motor Outputs
     DroneTypes::MotorCommands motor_commands;
-    calculateMotorCommands(setpoints, motor_commands);
+    calculateMotorCommands(remote_data.setpoint, motor_commands);
 
     // 7. Write Outputs to Motors
     motor_driver_.writeOutputs(motor_commands);

@@ -48,6 +48,17 @@ namespace DroneTypes
         uint16_t motor4;
     };
 
+    struct SensorData
+    {
+        Attitude attitude;
+        RawMPUData raw_mpu;
+    };
+
+    struct RemoteData
+    {
+        ControlSetpoint setpoint;
+        bool is_connected;
+    };
 }
 
 #endif // COMMON_TYPES_H

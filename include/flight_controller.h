@@ -33,7 +33,7 @@ public:
      * Call this periodically from the main loop or a dedicated RTOS task.
      * @param dt Time delta since the last cycle, in seconds.
      */
-    void runControlCycle(float dt);
+    void runControlCycle(float dt, const DroneTypes::SensorData &sensor_data, DroneTypes::RemoteData &remote_data); 
 
     /**
      * @brief Gets the current arming state of the drone.
@@ -54,7 +54,7 @@ private:
      * @brief Checks remote connection and handles failsafe condition.
      * @return true if failsafe is active, false otherwise.
      */
-    bool handleFailsafe();
+    bool handleFailsafe(const DroneTypes::RemoteData& remote_data);
 
     /**
      * @brief Handles actions needed when the drone is disarmed
@@ -66,7 +66,7 @@ private:
      * Updates the internal armed_ state.
      * @param setpoints Current control setpoints from the remote.
      */
-    void checkArmingConditions(const DroneTypes::ControlSetpoint &setpoints);
+    void checkArmingConditions(const DroneTypes::RemoteData& remote_data);
 
     /**
      * @brief Calculates the individual motor commands based on PID outputs and throttle.
