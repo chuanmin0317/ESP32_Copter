@@ -34,9 +34,7 @@ float PIDController::update(float setpoint, float measurement, float dt) {
     integral_ += error * dt;
     // Clamp integral term using limits
     integral_ = constrain(integral_, -integral_limit_, integral_limit_);
-    // Alternative manual clamp:
-    // if (integral_ > integral_limit_) integral_ = integral_limit_;
-    // else if (integral_ < -integral_limit_) integral_ = -integral_limit_;
+    
     float i_term = ki_ * integral_;
 
     // Derivative term (consider derivative on measurement later to avoid kick)
@@ -49,9 +47,6 @@ float PIDController::update(float setpoint, float measurement, float dt) {
 
     // Clamp output using limits
     output_ = constrain(output_, -output_limit_, output_limit_);
-    // Alternative manual clamp:
-    // if (output_ > output_limit_) output_ = output_limit_;
-    // else if (output_ < -output_limit_) output_ = -output_limit_;
 
     // Store error for next derivative calculation
     prev_error_ = error;

@@ -66,8 +66,6 @@ private:
     float integral_;
     float prev_error_;
     float output_;
-    // Note: We don't strictly need to store setpoint/measurement as members
-    // unless needed for other logic, they are passed to update().
 };
 
 #endif // PID_CONTROLLER_H
