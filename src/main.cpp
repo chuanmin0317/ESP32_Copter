@@ -27,11 +27,6 @@ void setup(){
     Serial.println(" ESP32 Drone Booting Up! ");
     Serial.println("============================");
 
-    Wire.begin(SDA_PIN, SCL_PIN);
-    Wire.setClock(400000);
-    Serial.println("I2C Initialized.");
-    delay(100);
-
     Serial.println("Initializing Drone Components...");
 
     if (!imu_handler.begin()) {

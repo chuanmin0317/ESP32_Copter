@@ -2,6 +2,7 @@
 #define IMU_HANDLER_H
 
 #include <MPU9250.h>
+#include <Preferences.h>
 #include "common_types.h"
 #include "setting.h"
 
@@ -42,14 +43,48 @@ public:
      */
     bool isDataReady() const;
 
+    /**
+     * @brief Runs the mpu9250 calibration routines (Accel/Gyro and Mag).
+     * @return true if calibration seemed successful.
+     */
+    bool runCalibrationRoutine();
+
+    void setGyroBias(float bx, float by, float bz);
+    void setAccBias(float bx, float by, float bz);
+    void setMagBias(float bx, float by, float bz);
+    void setMagScale(float sx, float sy, float sz);
+
 private:
     MPU9250 mpu9250_sensor_lib_;
+    Preferences preferences_;
 
     DroneTypes::Attitude current_attitude_;
     DroneTypes::RawMPUData current_mpu_data_;
     bool data_ready_;
 
+    /**
+     * @brief Applies sensor calibration values.
+     * Called by begin().
+     */
     void applyCalibration();
+
+    /**
+     * @brief Attempts to load calibration data from NVS.
+     * @param abias Output array for accelerometer bias (size 3).
+     * @param gbias Output array for gyroscope bias (size 3).
+     * @param mbias Output array for magnetometer bias (size 3).
+     * @param mscale Output array for magnetometer scale (size 3).
+     * @return true if calibration data was found and loaded, false otherwise.
+     */
+    bool loadCalibrationFromNVS(float abias[3], float gbias[3], float mbias[3], float mscale[3]);
+
+    /**
+     * @brief Saves the current calibration data (read from sensor library) to NVS.
+     * @return true if saving was successful, false otherwise.
+     */
+    bool saveCalibrationToNVS();
+
+    bool calibration_loaded_;
 };
 
 #endif // IMU_HANDLER_H
