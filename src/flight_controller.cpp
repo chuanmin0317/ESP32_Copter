@@ -74,14 +74,14 @@ void FlightController::checkArmingConditions(const DroneTypes::ControlSetpoint &
             Serial.println("Disarming: Throttle low.");
             armed_ = false;
         }
-        else
+    }
+    else
+    {
+        if (!armed_)
         {
-            if (!armed_)
-            {
-                Serial.println("Arming Sequence Met (Throttle raised).");
-                armed_ = true;
-                pid_controllers_.reset();
-            }
+            Serial.println("Arming Sequence Met (Throttle raised).");
+            armed_ = true;
+            pid_controllers_.reset();
         }
     }
 }
