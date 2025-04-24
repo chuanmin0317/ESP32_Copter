@@ -28,7 +28,7 @@ bool FlightController::isArmed() const
 
 // Private Helper Functions
 
-bool FlightController::handleFailsafe(const DroneTypes::RemoteData& remote_data)
+bool FlightController::handleFailsafe(const DroneTypes::RemoteData &remote_data)
 {
     if (!remote_data.is_connected)
     {
@@ -53,7 +53,7 @@ void FlightController::handleDisarmed()
     motor_driver_.writeOutputs(zero_commands);
 }
 
-void FlightController::checkArmingConditions(const DroneTypes::RemoteData& remote_data)
+void FlightController::checkArmingConditions(const DroneTypes::RemoteData &remote_data)
 {
     // Arming Logic:
     // 1. Must be connected.
@@ -61,9 +61,13 @@ void FlightController::checkArmingConditions(const DroneTypes::RemoteData& remot
     // 3. Specific stick command to arm
     // 4. Throttle low always disarms
 
-    if (!remote_handler_.isConnected())
+    if (!remote_data.is_connected)
     {
-        armed_ = false;
+        if (armed_)
+        {
+            Serial.println("Disarming: Remote disconnected.");
+            armed_ = false;
+        }
         return;
     }
 
@@ -74,14 +78,14 @@ void FlightController::checkArmingConditions(const DroneTypes::RemoteData& remot
             Serial.println("Disarming: Throttle low.");
             armed_ = false;
         }
-        else
+    }
+    else
+    {
+        if (!armed_)
         {
-            if (!armed_)
-            {
-                Serial.println("Arming Sequence Met (Throttle raised).");
-                armed_ = true;
-                pid_controllers_.reset();
-            }
+            Serial.println("Arming Sequence Met (Throttle raised).");
+            armed_ = true;
+            pid_controllers_.reset();
         }
     }
 }

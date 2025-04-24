@@ -143,8 +143,11 @@ void imuTask(void *pvParameters)
         // 2. If new data is ready, package and send it via Queue
         if (imu_handler.isDataReady())
         {
-            DroneTypes::RawMPUData mpu_data = imu_handler.getRawMPUData();
-            xQueueSend(imuDataQueue, &mpu_data, portMAX_DELAY); // Send data to queue
+            DroneTypes::SensorData sensor_data; // Use DroneTypes:: if needed
+            sensor_data.attitude = imu_handler.getAttitude();
+            sensor_data.raw_mpu = imu_handler.getRawMPUData();
+
+            xQueueOverwrite(imuDataQueue, &sensor_data);
         }
 
         // 3. Wait for the next cycle
@@ -171,7 +174,6 @@ void remoteTask(void *pvParameters)
         DroneTypes::RemoteData remote_data;
         remote_data.is_connected = remote_handler.isConnected();
         remote_data.setpoint = remote_handler.getSetpoint();
-
         xQueueOverwrite(remoteDataQueue, &remote_data);
 
         // 3. Wait for the next cycle
@@ -201,11 +203,13 @@ void flightControlTask(void *pvParameters)
         // 1. Wait for new data from Queues
         if (xQueueReceive(imuDataQueue, &current_sensor_data, portMAX_DELAY) == pdPASS)
         {
-        }else{
+        }
+        else
+        {
             Serial.println("IMU Data Queue Receive Failed!");
         }
 
-        // 2. Check for new Remote data 
+        // 2. Check for new Remote data
         xQueueReceive(remoteDataQueue, &current_remote_data, (TickType_t)0);
 
         // 3. Run the flight controller's main logic cycle
@@ -219,7 +223,8 @@ void flightControlTask(void *pvParameters)
 /**
  * @brief Task for printing status information periodically.
  */
-void statusTask(void *pvParameters){
+void statusTask(void *pvParameters)
+{
     TickType_t xLastWakeTime = xTaskGetTickCount();
     const TickType_t xFrequency = pdMS_TO_TICKS(STATUS_TASK_DELAY_MS); // 4Hz
 
@@ -228,7 +233,7 @@ void statusTask(void *pvParameters){
     for (;;)
     {
         // 1. Print status information (e.g., IMU data, remote connection status)
-        Serial.println("Status: IMU and Remote Data Available.");
+        // Serial.println("Status: IMU and Remote Data Available.");
 
         // 2. Wait for the next cycle
         vTaskDelayUntil(&xLastWakeTime, xFrequency);

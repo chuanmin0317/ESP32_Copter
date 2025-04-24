@@ -34,27 +34,8 @@ void MotorDriver::begin()
     writeOutputs(zero_commands);
 }
 
-// Optional: Implement limit function if needed
-// int16_t MotorDriver::limit(int16_t value, int16_t max_val, int16_t min_val) {
-//     if (value > max_val) return max_val;
-//     if (value < min_val) return min_val;
-//     return value;
-// }
-
 void MotorDriver::writeOutputs(const DroneTypes::MotorCommands &commands)
 { 
-    // Assuming commands.motorX values are already in the correct PWM range (e.g., 0-1023)
-    // Add limiting here as a safety net if desired:
-    // uint16_t pwm1 = limit(commands.motor1, MOTOR_OUTPUT_MAX, MOTOR_OUTPUT_MIN); // Use constants
-    // uint16_t pwm2 = limit(commands.motor2, MOTOR_OUTPUT_MAX, MOTOR_OUTPUT_MIN);
-    // uint16_t pwm3 = limit(commands.motor3, MOTOR_OUTPUT_MAX, MOTOR_OUTPUT_MIN);
-    // uint16_t pwm4 = limit(commands.motor4, MOTOR_OUTPUT_MAX, MOTOR_OUTPUT_MIN);
-    // ledcWrite(0, pwm1);
-    // ledcWrite(1, pwm2);
-    // ledcWrite(2, pwm3);
-    // ledcWrite(3, pwm4);
-
-    // Directly write without extra limiting (assuming input is already correct):
     ledcWrite(0, commands.motor1);
     ledcWrite(1, commands.motor2);
     ledcWrite(2, commands.motor3);
