@@ -6,9 +6,8 @@ IMUHandler::IMUHandler() : data_ready_(false) {}
 
 bool IMUHandler::begin()
 {
-    Wire.setPins(SDA_PIN, SCL_PIN); // Set custom SDA and SCL pins
-    Wire.begin();                   // Initialize I2C with custom SDA and SCL pins
-    Wire.setClock(400000);          // Set I2C frequency to 400kHz
+    Wire.begin(SDA_PIN, SCL_PIN);                   // Initialize I2C with custom SDA and SCL pins
+    Wire.setClock(100000);          // Set I2C frequency to 400kHz
 
     MPU9250Setting setting;
     setting.accel_fs_sel = ACCEL_FS_SEL::A8G;           // 加速度計量程 ±8g

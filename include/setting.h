@@ -14,10 +14,10 @@ left  [ ESP32 ] right
 #define MAIN_LOOP_DELAY_US (1000000 / MAIN_LOOP_FREQUENCY_HZ)
 
 // PID Settings
-#define PID_ROLL_KP 0.0f
+#define PID_ROLL_KP 0.7f
 #define PID_ROLL_KI 0.0f
 #define PID_ROLL_KD 0.0f
-#define PID_PITCH_KP 0.0f
+#define PID_PITCH_KP 0.7f
 #define PID_PITCH_KI 0.0f
 #define PID_PITCH_KD 0.0f
 #define PID_YAW_KP 0.0f
