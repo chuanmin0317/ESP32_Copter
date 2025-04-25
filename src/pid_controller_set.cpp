@@ -73,7 +73,7 @@ void PIDControllerSet::reset()
     pidRoll_.reset();
     pidPitch_.reset();
     pidYaw_.reset();
-    Serial.println("PID states reset.");
+    // Serial.println("PID states reset.");
 }
 
 // Getters for outputs

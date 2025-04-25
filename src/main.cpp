@@ -1,9 +1,12 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <math.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
+
+#include "esp_task_wdt.h"
 
 #include "setting.h"
 #include "common_types.h"
@@ -17,7 +20,7 @@
 #define IMU_TASK_STACK_SIZE 4096
 #define IMU_TASK_PRIORITY 5
 #define IMU_TASK_CORE 1
-#define IMU_TASK_DELAY_MS 2 // 500Hz
+#define IMU_TASK_DELAY_MS 4 // 250Hz
 
 #define REMOTE_TASK_STACK_SIZE 4096
 #define REMOTE_TASK_PRIORITY 4
@@ -29,10 +32,10 @@
 #define FLIGHTCONTROL_TASK_CORE 1
 #define FLIGHTCONTROL_TASK_DELAY_MS 4 // 250Hz
 
-#define STATUS_TASK_STACK_SIZE 2048
+#define STATUS_TASK_STACK_SIZE 3072
 #define STATUS_TASK_PRIORITY 2
 #define STATUS_TASK_CORE 0
-#define STATUS_TASK_DELAY_MS 250 // 4Hz
+#define STATUS_TASK_DELAY_MS 100 // 10Hz
 
 // Global Objects Instances
 IMUHandler imu_handler;
@@ -232,10 +235,7 @@ void statusTask(void *pvParameters)
 
     for (;;)
     {
-        // 1. Print status information (e.g., IMU data, remote connection status)
-        // Serial.println("Status: IMU and Remote Data Available.");
 
-        // 2. Wait for the next cycle
         vTaskDelayUntil(&xLastWakeTime, xFrequency);
     }
 }

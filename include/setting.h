@@ -60,4 +60,5 @@ left  [ ESP32 ] right
 #define SDA_PIN 21
 #define SCL_PIN 26
 #define MPU9250_ADDRESS 0x68
+#define CALIBRATION_PROMPT_TIMEOUT_MS 3000
 
