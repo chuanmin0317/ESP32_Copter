@@ -46,8 +46,8 @@ left  [ ESP32 ] right
 #define RC_THROTTLE_ARM_THRESHOLD 1030 // Value above min throttle (1000)
 
 // Motor Settings
-#define MOTOR1_PIN 13
-#define MOTOR2_PIN 14
+#define MOTOR1_PIN 14
+#define MOTOR2_PIN 13
 #define MOTOR3_PIN 33
 #define MOTOR4_PIN 34
 #define MOTOR_PWM_FREQUENCY 5000

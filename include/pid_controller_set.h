@@ -94,6 +94,8 @@ private:
 
     Preferences preferences_;
 
+    PIDController *getControllerByLoop(PIDLoop loop);
+
     const PIDController *getControllerByLoop(PIDLoop loop) const;
 
     void loadPIDConfig(PIDLoop loop, const char *kp_key, float default_kp,

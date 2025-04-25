@@ -25,6 +25,27 @@ PIDControllerSet::PIDControllerSet()
 {
 }
 
+PIDController *PIDControllerSet::getControllerByLoop(PIDLoop loop)
+{
+    switch (loop)
+    {
+    case PIDLoop::RATE_ROLL:
+        return &pidRateRoll_;
+    case PIDLoop::RATE_PITCH:
+        return &pidRatePitch_;
+    case PIDLoop::RATE_YAW:
+        return &pidRateYaw_;
+    case PIDLoop::ANGLE_ROLL:
+        return &pidRoll_;
+    case PIDLoop::ANGLE_PITCH:
+        return &pidPitch_;
+    case PIDLoop::ANGLE_YAW:
+        return &pidYaw_;
+    default:
+        return nullptr; // Invalid loop
+    }
+}
+
 const PIDController *PIDControllerSet::getControllerByLoop(PIDLoop loop) const
 {
     switch (loop)

@@ -107,10 +107,10 @@ void FlightController::calculateMotorCommands(const DroneTypes::ControlSetpoint 
     throttle_pwm_base = constrain(throttle_pwm_base, MOTOR_OUTPUT_MIN, MOTOR_OUTPUT_MAX);
 
     // Calculate individual motor outputs
-    float motor1_f = throttle_pwm_base - roll_output + pitch_output - yaw_output; // Front-Left
-    float motor2_f = throttle_pwm_base - roll_output - pitch_output + yaw_output; // Front-Right
-    float motor3_f = throttle_pwm_base + roll_output - pitch_output - yaw_output; // Rear-Right
-    float motor4_f = throttle_pwm_base + roll_output + pitch_output + yaw_output; // Rear-Left
+    float motor1_f = throttle_pwm_base - roll_output + pitch_output - yaw_output; // Front-Left (CW)
+    float motor2_f = throttle_pwm_base - roll_output - pitch_output + yaw_output; // Rear-Left (CCW)
+    float motor3_f = throttle_pwm_base + roll_output - pitch_output - yaw_output; // Rear-Right (CW)
+    float motor4_f = throttle_pwm_base + roll_output + pitch_output + yaw_output; // Front-Right (CCW)
 
     // Limit motor outputs to valid PWM range and convert to integer type
     commands_out.motor1 = (uint16_t)constrain(motor1_f, MOTOR_OUTPUT_MIN, MOTOR_OUTPUT_MAX);
