@@ -53,6 +53,13 @@ public:
      * @return The current integral value.
      */
     float getIntegral() const;
+    
+    // Getters for Configuration
+    float getKp() const;
+    float getKi() const;
+    float getKd() const;
+    float getIntegralLimit() const;
+    float getOutputLimit() const;
 
 private:
     // Configuration Parameters

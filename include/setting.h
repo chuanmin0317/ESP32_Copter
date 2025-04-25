@@ -62,3 +62,6 @@ left  [ ESP32 ] right
 #define MPU9250_ADDRESS 0x68
 #define CALIBRATION_PROMPT_TIMEOUT_MS 3000
 
+// WiFi Settings
+#define WIFI_SSID "DroneAP"
+#define WIFI_PASSWORD "12345678"

@@ -1,10 +1,21 @@
 #ifndef PID_CONTROLLER_SET_H
 #define PID_CONTROLLER_SET_H
 
+#include <Preferences.h>
 #include "pid_controller.h"
 #include "common_types.h"
 #include "setting.h"
 
+enum class PIDLoop : int
+{
+    RATE_ROLL = 0,
+    RATE_PITCH,
+    RATE_YAW,
+    ANGLE_ROLL,
+    ANGLE_PITCH,
+    ANGLE_YAW,
+    COUNT
+};
 class PIDControllerSet
 {
 public:
@@ -46,6 +57,32 @@ public:
     /** @brief Gets the output of the Yaw Rate PID controller. */
     float getRateYawOutput() const;
 
+    // Methods for Web Tuning
+    bool saveSettingsToNVS();
+
+    /**
+     * @brief Updates the gains (Kp, Ki, Kd) for a specific PID loop at runtime.
+     * IMPORTANT: Call this only when the drone is DISARMED for thread safety.
+     * @param loop The PIDLoop identifier for the target loop.
+     * @param kp New Kp value.
+     * @param ki New Ki value.
+     * @param kd New Kd value.
+     * @return true if update was successful (valid loop identifier), false otherwise.
+     */
+    bool updateSingleGainSet(PIDLoop loop, float kp, float ki, float kd);
+
+    /**
+     * @brief Gets the current configuration (gains and limits) of a specific PID loop.
+     * @param loop The PIDLoop identifier for the target loop.
+     * @param kp [Output] Current Kp value.
+     * @param ki [Output] Current Ki value.
+     * @param kd [Output] Current Kd value.
+     * @param int_limit [Output] Current Integral limit.
+     * @param out_limit [Output] Current Output limit.
+     * @return true if loopIdentifier is valid, false otherwise.
+     */
+    bool getSingleConfig(PIDLoop loop, float &kp, float &ki, float &kd, float &int_limit, float &out_limit) const;
+
 private:
     PIDController pidRateRoll_;
     PIDController pidRatePitch_;
@@ -54,6 +91,14 @@ private:
     PIDController pidRoll_;
     PIDController pidPitch_;
     PIDController pidYaw_;
+
+    Preferences preferences_;
+
+    const PIDController *getControllerByLoop(PIDLoop loop) const;
+
+    void loadPIDConfig(PIDLoop loop, const char *kp_key, float default_kp,
+                       const char *ki_key, float default_ki,
+                       const char *kd_key, float default_kd);
 };
 
 #endif // PID_CONTROLLER_SET_H

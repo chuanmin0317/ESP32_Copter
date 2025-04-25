@@ -1,12 +1,9 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <math.h>
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/queue.h"
-
-#include "esp_task_wdt.h"
 
 #include "setting.h"
 #include "common_types.h"
@@ -15,6 +12,7 @@
 #include "motor_driver.h"
 #include "pid_controller_set.h"
 #include "flight_controller.h"
+#include "web_server_manager.h"
 
 // Task Definitions
 #define IMU_TASK_STACK_SIZE 4096
@@ -43,6 +41,7 @@ RemoteHandler remote_handler;
 MotorDriver motor_driver;
 PIDControllerSet pid_controllers;
 FlightController flight_controller(imu_handler, remote_handler, pid_controllers, motor_driver);
+WebServerManager web_server_manager(pid_controllers, flight_controller);
 
 // FreeRTOS Handles
 QueueHandle_t imuDataQueue = NULL;
@@ -96,6 +95,8 @@ void setup()
 
     flight_controller.initialize(); // Initialize flight controller
 
+    web_server_manager.begin(); // Initialize web server
+    
     Serial.println("Creating FreeRTOS Queues...");
     imuDataQueue = xQueueCreate(1, sizeof(DroneTypes::SensorData));
     remoteDataQueue = xQueueCreate(1, sizeof(DroneTypes::RemoteData));
