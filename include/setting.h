@@ -44,6 +44,7 @@ left  [ ESP32 ] right
 #define RC_PITCH_RATE_SCALING 0.15f
 #define RC_YAW_RATE_SCALING 0.15f
 #define RC_THROTTLE_ARM_THRESHOLD 1030 // Value above min throttle (1000)
+#define RC_STICK_DEADZONE 20 
 
 // Motor Settings
 #define MOTOR1_PIN 14

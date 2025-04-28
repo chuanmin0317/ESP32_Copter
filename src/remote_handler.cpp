@@ -16,7 +16,7 @@ bool RemoteHandler::begin()
 {
     controller_lib_.begin();
     Serial.println("Xbox Controller Library Initialized.");
-    
+
     return true;
 }
 
@@ -30,22 +30,40 @@ uint16_t RemoteHandler::mapValue(int input)
 void RemoteHandler::calculateSetpoints()
 {
     const int16_t midpoint = (RC_MAP_OUTPUT_MAX + RC_MAP_OUTPUT_MIN) / 2;
+    const int16_t deadzone = RC_STICK_DEADZONE;
 
-    current_setpoint_.roll_angle_setpoint = (float)(midpoint - current_raw_input_.roll_raw) * RC_ROLL_RATE_SCALING;    // Or angle scaling
-    current_setpoint_.pitch_angle_setpoint = (float)(midpoint - current_raw_input_.pitch_raw) * RC_PITCH_RATE_SCALING; // Or angle scaling (Check inversion?)
-    current_setpoint_.yaw_rate_setpoint = (float)(current_raw_input_.yaw_raw - midpoint) * RC_YAW_RATE_SCALING;
+    int16_t roll_raw = midpoint - current_raw_input_.roll_raw;
+    if (abs(roll_raw) < deadzone)
+    {
+        current_setpoint_.roll_angle_setpoint = 0.0f;
+    }
+    else
+    {
+        current_setpoint_.roll_angle_setpoint = (float)(midpoint - current_raw_input_.roll_raw) * RC_ROLL_RATE_SCALING;
+    }
+
+    int16_t pitch_raw = midpoint - current_raw_input_.pitch_raw;
+    if (abs(pitch_raw) < deadzone)
+    {
+        current_setpoint_.pitch_angle_setpoint = 0.0f;
+    }
+    else
+    {
+        current_setpoint_.pitch_angle_setpoint = (float)(midpoint - current_raw_input_.pitch_raw) * RC_PITCH_RATE_SCALING;
+    }
+
+    int16_t yaw_raw = midpoint - current_raw_input_.yaw_raw;
+    if (abs(yaw_raw) < deadzone)
+    {
+        current_setpoint_.yaw_rate_setpoint = 0.0f;
+    }
+    else
+    {
+        current_setpoint_.yaw_rate_setpoint = (float)(current_raw_input_.yaw_raw - midpoint) * RC_YAW_RATE_SCALING;
+    }
 
     // Throttle is usually used directly from the mapped value
     current_setpoint_.throttle_value = current_raw_input_.throttle_raw;
-
-    // --- Add Deadzone Logic (Recommended) ---
-    // Example for roll:
-    // const int16_t deadzone = 20; // Define in config.h: RC_STICK_DEADZONE
-    // if (abs(current_raw_input_.roll_raw - midpoint) < deadzone) {
-    //     current_setpoint_.roll_angle_setpoint = 0.0f;
-    // }
-    // Apply similarly to pitch and yaw.
-    // --- End Deadzone Logic ---
 }
 
 void RemoteHandler::update()
@@ -99,11 +117,11 @@ bool RemoteHandler::isConnected() const
 }
 
 DroneTypes::ControlSetpoint RemoteHandler::getSetpoint() const
-{ 
+{
     return current_setpoint_;
 }
 
 DroneTypes::RemoteInputRaw RemoteHandler::getRawInput() const
-{ 
+{
     return current_raw_input_;
 }
