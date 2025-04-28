@@ -31,8 +31,8 @@ void RemoteHandler::calculateSetpoints()
 {
     const int16_t midpoint = (RC_MAP_OUTPUT_MAX + RC_MAP_OUTPUT_MIN) / 2;
 
-    current_setpoint_.roll_angle_setpoint = (float)(current_raw_input_.roll_raw - midpoint) * RC_ROLL_RATE_SCALING;    // Or angle scaling
-    current_setpoint_.pitch_angle_setpoint = (float)(current_raw_input_.pitch_raw - midpoint) * RC_PITCH_RATE_SCALING; // Or angle scaling (Check inversion?)
+    current_setpoint_.roll_angle_setpoint = (float)(midpoint - current_raw_input_.roll_raw) * RC_ROLL_RATE_SCALING;    // Or angle scaling
+    current_setpoint_.pitch_angle_setpoint = (float)(midpoint - current_raw_input_.pitch_raw) * RC_PITCH_RATE_SCALING; // Or angle scaling (Check inversion?)
     current_setpoint_.yaw_rate_setpoint = (float)(current_raw_input_.yaw_raw - midpoint) * RC_YAW_RATE_SCALING;
 
     // Throttle is usually used directly from the mapped value

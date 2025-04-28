@@ -148,8 +148,8 @@ void IMUHandler::applyCalibration()
     {
         if (Serial.available() > 0)
         {
-            input_string = Serial.readStringUntil('\n'); 
-            input_string.trim();                         
+            input_string = Serial.readStringUntil('\n');
+            input_string.trim();
             if (input_string.equalsIgnoreCase("yes"))
             {
                 start_calibration = true;

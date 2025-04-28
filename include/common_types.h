@@ -9,12 +9,12 @@ namespace DroneTypes
 
     struct RawMPUData
     {
-        int16_t accX;
-        int16_t accY;
-        int16_t accZ;
-        int16_t gyroX;
-        int16_t gyroY;
-        int16_t gyroZ;
+        float accX;
+        float accY;
+        float accZ;
+        float gyroX;
+        float gyroY;
+        float gyroZ;
     };
 
     struct Attitude

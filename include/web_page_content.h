@@ -74,8 +74,8 @@ const char *HTML_CONTENT = R"rawliteral(
                         <h3>${loop.name} (ID: ${loop.id})</h3>
                         <form id="form-${loop.id}" onsubmit="event.preventDefault(); applySinglePID(${loop.id});">
                             <label for="kp-${loop.id}">Kp:</label><input type="number" step="0.01" id="kp-${loop.id}" name="kp" required>
-                            <label for="ki-${loop.id}">Ki:</label><input type="number" step="0.01" id="ki-${loop.id}" name="ki" required>
-                            <label for="kd-${loop.id}">Kd:</label><input type="number" step="0.01" id="kd-${loop.id}" name="kd" required>
+                            <label for="ki-${loop.id}">Ki:</label><input type="number" step="0.001" id="ki-${loop.id}" name="ki" required>
+                            <label for="kd-${loop.id}">Kd:</label><input type="number" step="0.001" id="kd-${loop.id}" name="kd" required>
                             <button type="submit" class="btn-apply">套用 ${loop.name}</button>
                         </form>
                         <div style="font-size:0.8em; color: #777; margin-top: 5px;">
