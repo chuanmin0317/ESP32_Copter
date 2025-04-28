@@ -239,6 +239,8 @@ bool IMUHandler::update()
         current_attitude_.yaw = mpu9250_sensor_lib_.getYaw();
 
         data_ready_ = true;
+        // Serial.printf("Roll:%.2f Pitch:%.2f Yaw:%.2f\n",
+        //               current_attitude_.roll, current_attitude_.pitch, current_attitude_.yaw);
         return true;
     }
 
