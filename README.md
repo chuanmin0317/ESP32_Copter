@@ -133,22 +133,3 @@ cd ESP32_Copter
 *   `config.h`: Centralizes hardware pin definitions, I2C address, baud rate, etc.
 *   `MyCommon.h`/`.cpp` (or equivalent global definition area): Includes all headers, declares and defines global variables/objects, provides a global initialization function. (**Note: This is a major weakness of the current architecture**).
 
-## Known Issues & Limitations
-
-*   **Architectural Problem:** The code relies heavily on **global variables**, leading to **tight coupling** between modules, reducing readability, testability, and maintainability.
-*   **Real-Time Issues:** The main loop uses **busy-waiting** for timing, which is inefficient and can introduce control jitter. IMU data update frequency might not synchronize with the main loop.
-*   **Sensor Calibration:** IMU calibration values are **hard-coded**, failing to adapt to individual sensor variations or environmental changes.
-*   **Parameter Management:** PID gains, limit values, RC mapping factors, etc., use **magic numbers**, and PID gains require **manual tuning** to function.
-*   **Robustness:** Error handling is basic; RC **deadzone** is not handled; PID **derivative term** implementation might be sensitive to noise and suffer from derivative kick.
-
-## Potential Future Enhancements (To-Do)
-
-*   [ ] **Refactor Architecture:** Reduce or eliminate global variable dependency. Consider using classes (OOP) to encapsulate module functionality or pass state via function parameters/return values.
-*   [ ] **Improve Loop Scheduling:** Replace busy-waiting with FreeRTOS tasks and `vTaskDelayUntil` or non-blocking delays (`yield()`) for precise and efficient timing.
-*   [ ] **Synchronize Data Flow:** Ensure sensor data updates are synchronized with the control loop.
-*   [ ] **Correct Hardware Pin Config:** Ensure all pin definitions are correct and suitable for their intended use.
-*   [ ] **Implement Runtime Calibration:** Add an IMU calibration routine and store results in the ESP32's non-volatile memory (Flash).
-*   [ ] **Parameterize Configuration:** Replace magic numbers with constants or a configuration system; implement runtime PID tuning or loading from storage.
-*   [ ] **Enhance Robustness:** Add RC deadzone handling; improve PID derivative calculation (e.g., derivative on measurement, filtering); implement more robust error handling.
-*   [ ] **Write Tests:** Implement unit tests for critical algorithms (PID, mixing) if feasible.
-*   [ ] **Add More Features:** E.g., Altitude Hold (requires barometer), GPS Position Hold, Flight Mode switching.
