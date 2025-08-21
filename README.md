@@ -123,13 +123,4 @@ cd ESP32_Copter
     *   (You should elaborate on the control direction based on the specific logic in `remote.cpp`'s `mapValue` and `RC_Analyse`).
 7.  **Disarm Motors:** Move the throttle joystick to its lowest position (below the threshold). The motors will stop spinning.
 
-## Code Structure Overview
-
-*   `main.cpp`: Main program entry point, contains `setup()` and `loop()`, coordinates module calls.
-*   `control.cpp`/`.h`: Handles triggering PID calculations, motor mixing logic, and PWM output.
-*   `imu.cpp`/`.h`: Manages MPU9250 initialization, calibration application, and sensor data reading.
-*   `remote.cpp`/`.h`: Responsible for Xbox controller initialization, data reading, and mapping.
-*   `pid.cpp`/`.h`: Contains the PID controller object structure definition and core algorithm implementation (update, reset, cascade).
-*   `config.h`: Centralizes hardware pin definitions, I2C address, baud rate, etc.
-*   `MyCommon.h`/`.cpp` (or equivalent global definition area): Includes all headers, declares and defines global variables/objects, provides a global initialization function. (**Note: This is a major weakness of the current architecture**).
 
